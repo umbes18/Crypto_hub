@@ -4,10 +4,20 @@ import { useState } from 'react';
 import Image from 'next/image';
 import { ArrowLeft } from 'lucide-react';
 import Link from 'next/link';
+import dynamic from 'next/dynamic';
 import { CryptoDetail, ChartData, CandleData } from '@/types';
 import { formatPrice, formatMarketCap, formatPercentage } from '@/lib/utils';
-import AreaChart from '@/components/charts/AreaChart';
-import CandlestickChart from '@/components/charts/CandlestickChart';
+
+// Import dinamici dei chart solo client-side
+const AreaChart = dynamic(() => import('@/components/charts/AreaChart'), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-rh-surface/20 rounded animate-pulse" />
+});
+
+const CandlestickChart = dynamic(() => import('@/components/charts/CandlestickChart'), {
+  ssr: false,
+  loading: () => <div className="w-full h-full bg-rh-surface/20 rounded animate-pulse" />
+});
 
 interface CryptoDetailClientProps {
   crypto: CryptoDetail;

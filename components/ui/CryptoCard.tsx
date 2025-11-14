@@ -1,10 +1,16 @@
 'use client';
 
-import Link from 'next/link';
-import Image from 'next/image';
+import dynamic from 'next/dynamic';
 import { CryptoAsset } from '@/types';
 import { formatPrice, formatPercentage } from '@/lib/utils';
-import { MiniChart } from './MiniChart';
+import Link from 'next/link';
+import Image from 'next/image';
+
+// Import dinamico del MiniChart solo client-side
+const MiniChart = dynamic(() => import('./MiniChart').then(mod => ({ default: mod.MiniChart })), {
+  ssr: false,
+  loading: () => <div className="h-16 w-full bg-rh-surface/20 rounded animate-pulse" />
+});
 
 interface CryptoCardProps {
   crypto: CryptoAsset;

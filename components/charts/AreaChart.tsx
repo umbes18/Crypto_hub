@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import {
   AreaChart as RechartsAreaChart,
   Area,
@@ -19,12 +19,6 @@ interface AreaChartProps {
 }
 
 export default function AreaChart({ data, isPositive }: AreaChartProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const chartData = useMemo(
     () =>
       data.map((item) => ({
@@ -35,10 +29,6 @@ export default function AreaChart({ data, isPositive }: AreaChartProps) {
   );
 
   const color = isPositive ? '#00C805' : '#FF5000';
-
-  if (!mounted) {
-    return <div className="w-full h-full bg-rh-surface/20 rounded animate-pulse" />;
-  }
 
   return (
     <div style={{ width: '100%', height: '100%', minHeight: '400px' }}>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import {
   ComposedChart,
   XAxis,
@@ -59,12 +59,6 @@ const CustomCandlestick = (props: any) => {
 };
 
 export default function CandlestickChart({ data }: CandlestickChartProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const chartData = useMemo(() => {
     return data.map((candle) => ({
       time: new Date(candle.time).toLocaleDateString(),
@@ -75,10 +69,6 @@ export default function CandlestickChart({ data }: CandlestickChartProps) {
       range: [candle.low, candle.high],
     }));
   }, [data]);
-
-  if (!mounted) {
-    return <div className="w-full h-full bg-rh-surface/20 rounded animate-pulse" />;
-  }
 
   return (
     <div style={{ width: '100%', height: '100%', minHeight: '400px' }}>

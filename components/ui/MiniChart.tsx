@@ -1,6 +1,6 @@
 'use client';
 
-import { useMemo, useState, useEffect } from 'react';
+import { useMemo } from 'react';
 import { AreaChart, Area, ResponsiveContainer } from 'recharts';
 
 interface MiniChartProps {
@@ -9,12 +9,6 @@ interface MiniChartProps {
 }
 
 export function MiniChart({ data, isPositive }: MiniChartProps) {
-  const [mounted, setMounted] = useState(false);
-
-  useEffect(() => {
-    setMounted(true);
-  }, []);
-
   const chartData = useMemo(
     () => data.map((price, index) => ({ index, price })),
     [data]
@@ -22,7 +16,7 @@ export function MiniChart({ data, isPositive }: MiniChartProps) {
 
   const color = isPositive ? '#00C805' : '#FF5000';
 
-  if (!data || data.length === 0 || !mounted) return <div className="h-16 w-full bg-rh-surface/20 rounded animate-pulse" />;
+  if (!data || data.length === 0) return null;
 
   return (
     <div style={{ width: '100%', height: '64px' }}>

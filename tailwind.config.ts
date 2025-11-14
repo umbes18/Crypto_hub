@@ -9,24 +9,16 @@ const config: Config = {
   theme: {
     extend: {
       colors: {
-        'robinhood-green': '#00C805',
-        'robinhood-dark': '#0F0F0F',
-        'robinhood-gray': '#1E1E1E',
-        'robinhood-light-gray': '#2A2A2A',
+        'rh-green': '#00C805',
+        'rh-red': '#FF5000',
+        'rh-bg': '#000000',
+        'rh-surface': '#1C1C1E',
+        'rh-border': '#2C2C2E',
+        'rh-text': '#FFFFFF',
+        'rh-text-secondary': '#8E8E93',
       },
-      animation: {
-        'fade-in': 'fadeIn 0.5s ease-in-out',
-        'slide-up': 'slideUp 0.3s ease-out',
-      },
-      keyframes: {
-        fadeIn: {
-          '0%': { opacity: '0' },
-          '100%': { opacity: '1' },
-        },
-        slideUp: {
-          '0%': { transform: 'translateY(10px)', opacity: '0' },
-          '100%': { transform: 'translateY(0)', opacity: '1' },
-        },
+      fontFamily: {
+        sans: ['-apple-system', 'BlinkMacSystemFont', 'San Francisco', 'Segoe UI', 'Roboto', 'Helvetica Neue', 'sans-serif'],
       },
     },
   },

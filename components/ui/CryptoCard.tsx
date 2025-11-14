@@ -2,7 +2,6 @@
 
 import Link from 'next/link';
 import Image from 'next/image';
-import { TrendingUp, TrendingDown } from 'lucide-react';
 import { CryptoAsset } from '@/types';
 import { formatPrice, formatPercentage } from '@/lib/utils';
 import { MiniChart } from './MiniChart';
@@ -17,11 +16,12 @@ export default function CryptoCard({ crypto }: CryptoCardProps) {
   return (
     <Link
       href={`/crypto/${crypto.id}`}
-      className="group block rounded-xl bg-robinhood-gray p-4 transition-all hover:bg-robinhood-light-gray hover:scale-[1.02] animate-fade-in"
+      className="block bg-rh-surface rounded-lg p-5 hover:bg-rh-border transition-colors cursor-pointer"
     >
-      <div className="flex items-start justify-between mb-3">
+      {/* Header */}
+      <div className="flex items-center justify-between mb-4">
         <div className="flex items-center gap-3">
-          <div className="relative h-10 w-10 rounded-full overflow-hidden bg-robinhood-light-gray">
+          <div className="relative h-10 w-10 rounded-full overflow-hidden">
             <Image
               src={crypto.image}
               alt={crypto.name}
@@ -31,50 +31,38 @@ export default function CryptoCard({ crypto }: CryptoCardProps) {
             />
           </div>
           <div>
-            <h3 className="font-semibold text-foreground group-hover:text-robinhood-green transition-colors">
-              {crypto.name}
-            </h3>
-            <p className="text-sm text-muted-foreground uppercase">
-              {crypto.symbol}
-            </p>
+            <h3 className="font-semibold text-base text-white">{crypto.name}</h3>
+            <p className="text-sm text-rh-text-secondary uppercase">{crypto.symbol}</p>
           </div>
-        </div>
-
-        <div
-          className={`flex items-center gap-1 px-2 py-1 rounded-md ${
-            isPositive ? 'bg-green-500/10' : 'bg-red-500/10'
-          }`}
-        >
-          {isPositive ? (
-            <TrendingUp className="h-3 w-3 text-green-500" />
-          ) : (
-            <TrendingDown className="h-3 w-3 text-red-500" />
-          )}
-          <span
-            className={`text-xs font-medium ${
-              isPositive ? 'text-green-500' : 'text-red-500'
-            }`}
-          >
-            {formatPercentage(crypto.price_change_percentage_24h)}
-          </span>
         </div>
       </div>
 
-      <div className="space-y-2">
-        <div className="flex items-baseline justify-between">
-          <p className="text-2xl font-bold text-foreground">
+      {/* Chart */}
+      {crypto.sparkline_in_7d && crypto.sparkline_in_7d.price.length > 0 && (
+        <div className="h-16 mb-4 -mx-2">
+          <MiniChart
+            data={crypto.sparkline_in_7d.price}
+            isPositive={isPositive}
+          />
+        </div>
+      )}
+
+      {/* Price and Change */}
+      <div className="flex items-end justify-between">
+        <div>
+          <p className="text-2xl font-semibold text-white">
             {formatPrice(crypto.current_price)}
           </p>
         </div>
-
-        {crypto.sparkline_in_7d && (
-          <div className="h-16 -mx-2">
-            <MiniChart
-              data={crypto.sparkline_in_7d.price}
-              isPositive={isPositive}
-            />
-          </div>
-        )}
+        <div>
+          <p
+            className={`text-sm font-semibold ${
+              isPositive ? 'text-rh-green' : 'text-rh-red'
+            }`}
+          >
+            {formatPercentage(crypto.price_change_percentage_24h)}
+          </p>
+        </div>
       </div>
     </Link>
   );

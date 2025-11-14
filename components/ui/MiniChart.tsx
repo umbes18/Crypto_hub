@@ -14,26 +14,31 @@ export function MiniChart({ data, isPositive }: MiniChartProps) {
     [data]
   );
 
-  const color = isPositive ? '#00C805' : '#ef4444';
+  const color = isPositive ? '#00C805' : '#FF5000';
+
+  if (!data || data.length === 0) return null;
 
   return (
-    <ResponsiveContainer width="100%" height="100%">
-      <AreaChart data={chartData}>
-        <defs>
-          <linearGradient id={`gradient-${isPositive}`} x1="0" y1="0" x2="0" y2="1">
-            <stop offset="0%" stopColor={color} stopOpacity={0.3} />
-            <stop offset="100%" stopColor={color} stopOpacity={0} />
-          </linearGradient>
-        </defs>
-        <Area
-          type="monotone"
-          dataKey="price"
-          stroke={color}
-          strokeWidth={2}
-          fill={`url(#gradient-${isPositive})`}
-          isAnimationActive={false}
-        />
-      </AreaChart>
-    </ResponsiveContainer>
+    <div style={{ width: '100%', height: '100%', minHeight: '64px' }}>
+      <ResponsiveContainer width="100%" height="100%" minHeight={64}>
+        <AreaChart data={chartData} margin={{ top: 0, right: 0, bottom: 0, left: 0 }}>
+          <defs>
+            <linearGradient id={`gradient-${isPositive ? 'up' : 'down'}`} x1="0" y1="0" x2="0" y2="1">
+              <stop offset="0%" stopColor={color} stopOpacity={0.2} />
+              <stop offset="100%" stopColor={color} stopOpacity={0} />
+            </linearGradient>
+          </defs>
+          <Area
+            type="monotone"
+            dataKey="price"
+            stroke={color}
+            strokeWidth={1.5}
+            fill={`url(#gradient-${isPositive ? 'up' : 'down'})`}
+            isAnimationActive={false}
+            dot={false}
+          />
+        </AreaChart>
+      </ResponsiveContainer>
+    </div>
   );
 }

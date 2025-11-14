@@ -14,30 +14,34 @@ export default function NewsCard({ article }: NewsCardProps) {
       href={article.url}
       target="_blank"
       rel="noopener noreferrer"
-      className="group block rounded-xl bg-robinhood-gray p-5 transition-all hover:bg-robinhood-light-gray hover:scale-[1.01] animate-fade-in"
+      className="block bg-rh-surface rounded-lg p-5 hover:bg-rh-border transition-colors"
     >
-      <div className="flex items-start justify-between mb-3">
-        <div className="flex items-center gap-2 text-sm text-muted-foreground">
-          <span className="font-medium text-robinhood-green">{article.source}</span>
-          <span>•</span>
+      {/* Header */}
+      <div className="flex items-center justify-between mb-3">
+        <div className="flex items-center gap-2 text-xs text-rh-text-secondary">
+          <span className="font-medium text-rh-green">{article.source}</span>
+          <span>·</span>
           <span>{getTimeAgo(article.publishedAt)}</span>
         </div>
-        <ExternalLink className="h-4 w-4 text-muted-foreground group-hover:text-robinhood-green transition-colors" />
+        <ExternalLink className="h-4 w-4 text-rh-text-secondary flex-shrink-0" />
       </div>
 
-      <h3 className="text-lg font-semibold text-foreground mb-2 group-hover:text-robinhood-green transition-colors line-clamp-2">
+      {/* Title */}
+      <h3 className="text-base font-semibold text-white mb-2 line-clamp-2 leading-snug">
         {article.title}
       </h3>
 
+      {/* Description */}
       {article.description && (
-        <p className="text-sm text-muted-foreground line-clamp-3">
+        <p className="text-sm text-rh-text-secondary line-clamp-2 leading-relaxed">
           {article.description}
         </p>
       )}
 
+      {/* Category */}
       {article.category && (
         <div className="mt-3">
-          <span className="inline-block px-2 py-1 text-xs font-medium bg-robinhood-light-gray text-robinhood-green rounded">
+          <span className="inline-block px-2 py-1 text-xs font-medium bg-black text-rh-green rounded border border-rh-border">
             {article.category}
           </span>
         </div>

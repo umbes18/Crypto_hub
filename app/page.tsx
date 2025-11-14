@@ -1,9 +1,10 @@
 import { fetchTopCryptos, fetchCryptoNews } from '@/lib/api';
 import CryptoCard from '@/components/ui/CryptoCard';
 import NewsCard from '@/components/ui/NewsCard';
-import { TrendingUp, Newspaper } from 'lucide-react';
+import { TrendingUp, Newspaper, ArrowRight } from 'lucide-react';
+import Link from 'next/link';
 
-export const revalidate = 60; // Revalidate every 60 seconds
+export const revalidate = 60;
 
 export default async function Home() {
   const [topCryptos, news] = await Promise.all([
@@ -12,75 +13,64 @@ export default async function Home() {
   ]);
 
   return (
-    <div className="container px-4 py-8 md:px-6">
-      {/* Hero Section */}
-      <section className="mb-12 animate-fade-in">
-        <h1 className="text-4xl md:text-5xl font-bold mb-4">
-          Track <span className="text-gradient">Crypto Markets</span> in Real-time
-        </h1>
-        <p className="text-lg text-muted-foreground max-w-2xl">
-          Stay updated with live cryptocurrency prices, interactive charts, and the latest news
-          from top sources like CoinDesk, The Block, Messari, and more.
-        </p>
-      </section>
+    <div className="min-h-screen bg-black">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        {/* Hero Section */}
+        <section className="mb-12">
+          <h1 className="text-4xl sm:text-5xl font-bold mb-4 tracking-tight">
+            Investing
+          </h1>
+          <p className="text-lg text-rh-text-secondary max-w-2xl">
+            Build your crypto portfolio and track real-time prices
+          </p>
+        </section>
 
-      {/* Market Overview */}
-      <section className="mb-12">
-        <div className="flex items-center gap-2 mb-6">
-          <TrendingUp className="h-6 w-6 text-robinhood-green" />
-          <h2 className="text-2xl font-bold">Top Cryptocurrencies</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
-          {topCryptos.map((crypto, index) => (
-            <div
-              key={crypto.id}
-              style={{ animationDelay: `${index * 50}ms` }}
-              className="animate-slide-up"
-            >
-              <CryptoCard crypto={crypto} />
+        {/* Popular Cryptocurrencies */}
+        <section className="mb-16">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <TrendingUp className="h-5 w-5 text-rh-green" strokeWidth={2.5} />
+              <h2 className="text-xl font-semibold">Popular</h2>
             </div>
-          ))}
-        </div>
-
-        <div className="mt-6 text-center">
-          <a
-            href="/prices"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-robinhood-green text-white font-semibold rounded-lg hover:bg-green-600 transition-colors"
-          >
-            View All Cryptocurrencies
-          </a>
-        </div>
-      </section>
-
-      {/* News Section */}
-      <section>
-        <div className="flex items-center gap-2 mb-6">
-          <Newspaper className="h-6 w-6 text-robinhood-green" />
-          <h2 className="text-2xl font-bold">Latest Crypto News</h2>
-        </div>
-
-        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
-          {news.slice(0, 6).map((article, index) => (
-            <div
-              key={article.id}
-              style={{ animationDelay: `${index * 50}ms` }}
-              className="animate-slide-up"
+            <Link
+              href="/prices"
+              className="flex items-center gap-1 text-sm font-medium text-rh-green hover:text-green-400 transition-colors"
             >
-              <NewsCard article={article} />
-            </div>
-          ))}
-        </div>
+              View All
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
 
-        <div className="mt-6 text-center">
-          <a
-            href="/news"
-            className="inline-flex items-center gap-2 px-6 py-3 bg-robinhood-gray text-foreground font-semibold rounded-lg hover:bg-robinhood-light-gray transition-colors"
-          >
-            View All News
-          </a>
-        </div>
-      </section>
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+            {topCryptos.map((crypto) => (
+              <CryptoCard key={crypto.id} crypto={crypto} />
+            ))}
+          </div>
+        </section>
+
+        {/* News Section */}
+        <section>
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-2">
+              <Newspaper className="h-5 w-5 text-rh-green" strokeWidth={2.5} />
+              <h2 className="text-xl font-semibold">Latest News</h2>
+            </div>
+            <Link
+              href="/news"
+              className="flex items-center gap-1 text-sm font-medium text-rh-green hover:text-green-400 transition-colors"
+            >
+              View All
+              <ArrowRight className="h-4 w-4" />
+            </Link>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
+            {news.slice(0, 6).map((article) => (
+              <NewsCard key={article.id} article={article} />
+            ))}
+          </div>
+        </section>
+      </div>
     </div>
   );
 }
